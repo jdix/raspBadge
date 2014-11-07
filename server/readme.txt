@@ -27,4 +27,8 @@ provides data in the following format:
 	}]
 }
 
+The calendar is at: https://www.google.com/calendar/embed?src=bHZuYTVidTJybGZicGo2ZDNjazJqamJnbHNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
+although it looks like only i can edit it. 
+
+
 
