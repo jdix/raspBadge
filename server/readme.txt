@@ -1,15 +1,13 @@
 RaspBadge Server software - currently deployed on EC2 box.
 
 
-<b>Google Calendar Poller</b><br/>
+Google Calendar Poller
+
 Currently set up to run GooglePoller on a minutely cron job which cleans out all 'googlecalendar' Notifications for the given user.
 Dumps result into MongoDB for Notifications server to provide to our Pi Clients.
 
 
-<br/>
-<br/>
-
-<b>Notifications Server</b>
+Notifications Server
 Restful service which serves up the contents of the Notifications MongoDB database for the given user.
 
 go to service with http://HOSTNAME:8080/notifications/scmallo
