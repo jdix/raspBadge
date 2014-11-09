@@ -1,1 +1,1 @@
-folder to add apps to
+All software which runs on the Pi
