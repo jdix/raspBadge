@@ -12,11 +12,14 @@ class Database:
 		command={"source": source, "username": username}
 		self.db.remove(command)
 
-	def insertEvent(self, username, source, time, display): 
+	def insertEvent(self, username, source, start, end, display): 
 		dbEvent = {
 			"username": username,
 			"source": source,
-			"time": time, 
+			"time": {
+				"start": start, 
+				"end": end
+			 }, 
 			"display": display,
 			"dateOfIngest": strftime("%Y-%m-%d %H:%M:%S", gmtime())
 		}

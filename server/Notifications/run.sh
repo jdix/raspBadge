@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python restful.py
+nohup python restful.py >output.log & 

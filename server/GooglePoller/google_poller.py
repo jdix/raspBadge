@@ -1,5 +1,6 @@
 ##!/bin/python
 
+import traceback
 import urllib2
 import json 
 from database import Database
@@ -21,41 +22,41 @@ class GooglePoller:
 			for event in events:
 				title=event['title']['$t']
 				loc=""
-				start=""
-				end=""
-				time=""
+				time_display=""
+				start_time=""
+				end_time=""
 				for where in event['gd$where']:
 					location=where['valueString']
 					if (location != ""):
 						 loc = " Location: " + location
 				for when in event['gd$when']:
-					time = self.convertGoogleTime(when['startTime'])
-					start = " - " + self.convertGoogleTimeToDisplay(when['startTime'])
-					end= " until " + self.convertGoogleTimeToDisplay(when['endTime'])
+					start=when['startTime']
+					end=when['endTime']
+
+					start_time = self.convertGoogleTime(start)
+					end_time = self.convertGoogleTime(end)
+					start_display = self.convertToTimeOfDay(start) 
+					end_display = self.convertToTimeOfDay(end)
+
+					time_display = " - " + start_display + " until " + end_display
 		
-				display = title + loc + start + end
+				display = title + loc + time_display
 		
-				self.database.insertEvent(username, source, time, display)
+				self.database.insertEvent(username, source, start_time, end_time, display)
 		
 		except ValueError:
 			print("Error occurred while polling user")
+		  	traceback.print_exc()
 		
 
 	def convertGoogleTime(self, time):
-		return format(dateutil.parser.parse(time))
+		return self.formatDate("%Y-%m-%d %H:%M:%S",time)
 		
-	def convertGoogleTimeToDisplay(self, time):
-		time = self.convertGoogleTime(time)
-		today = format(datetime.date.today())
-		tomorrow = format(datetime.date.today() + datetime.timedelta(days=1))
-		
-		if today in time:
-			time = time.replace(today, "Today ")
-		if tomorrow in time:
-			time = time.replace(tomorrow, "Tomorrow ")
-		return time
+	def convertToTimeOfDay(self, time):
+		return self.formatDate("%H:%M:%S", time)
 
-	def format(self, time):
-		return strftime("%Y-%m-%d %H:%M:%S", time)
+	def formatDate(self, f, time):
+		parsedTime=dateutil.parser.parse(time)
+		return strftime(f, parsedTime)
 	
 
