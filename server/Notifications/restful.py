@@ -1,7 +1,7 @@
 import json
 import bottle
 from bottle import route, run, request, abort
-from pymongo import Connection, DESCENDING
+from pymongo import Connection, ASCENDING
  
 connection = Connection('localhost', 27017)
 db = connection.notifications
@@ -11,7 +11,7 @@ def get_document(username):
 	try:
 
 		print "Serving request for: ", username
-		dbResult = db.notification.find({"username": username}, {"time": 1, "display": 1, "source": 1, "_id": 0, "dateOfIngest": 1}).sort([("time", DESCENDING)])
+		dbResult = db.notification.find({"username": username}, {"time": 1, "display": 1, "_id": 0,}).sort([("time.start", 1), ("time.end", 1)])
 		
 		entity = [entry for entry in dbResult]
 		if not entity:

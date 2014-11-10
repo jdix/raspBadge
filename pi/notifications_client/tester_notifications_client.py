@@ -9,4 +9,4 @@ print "This is a test app for the NotificationsClient just to see it run in the 
 print "Running against /notifications/scmallo"
 print "------------------------"
 
-print NotificationsClient().getForSIDD("scmallo")
+print NotificationsClient().getForSIDD("scmallo").getMostRelevent(10)
