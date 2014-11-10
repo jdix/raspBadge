@@ -1,4 +1,4 @@
-##!/bin/python
+#!/bin/python
 
 import traceback
 import urllib2
@@ -6,6 +6,7 @@ import json
 from database import Database
 from time import strftime
 import datetime, dateutil.parser
+import dateutil.parser
 
 source="googlecalendar"
 
@@ -35,28 +36,25 @@ class GooglePoller:
 
 					start_time = self.convertGoogleTime(start)
 					end_time = self.convertGoogleTime(end)
-					start_display = self.convertToTimeOfDay(start) 
-					end_display = self.convertToTimeOfDay(end)
+					time_display = self.datesToDisplay(start, end)
 
-					time_display = " - " + start_display + " until " + end_display
-		
 				display = title + loc + time_display
 		
 				self.database.insertEvent(username, source, start_time, end_time, display)
 		
 		except ValueError:
 			print("Error occurred while polling user")
-		  	traceback.print_exc()
-		
+
+	def datesToDisplay(self, start, end):
+		start_display = self.convertToTimeOfDay(start) 
+		end_display = self.convertToTimeOfDay(end)
+		return " - " + start_display + " until " + end_display
 
 	def convertGoogleTime(self, time):
 		return self.formatDate("%Y-%m-%d %H:%M:%S",time)
 		
 	def convertToTimeOfDay(self, time):
-		return self.formatDate("%H:%M:%S", time)
+		return self.formatDate("%H:%M", time)
 
 	def formatDate(self, f, time):
-		parsedTime=dateutil.parser.parse(time)
-		return strftime(f, parsedTime)
-	
-
+		return dateutil.parser.parse(time).strftime(f)
