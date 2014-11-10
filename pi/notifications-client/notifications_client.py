@@ -13,4 +13,3 @@ class NotificationsClient:
 		notificationsForUser = json.loads(output)
 		return notificationsForUser		
 	
-print NotificationsClient().getForSIDD("scmallo")

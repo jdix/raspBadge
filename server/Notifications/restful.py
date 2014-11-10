@@ -10,12 +10,14 @@ db = connection.notifications
 def get_document(username):
 	try:
 
+		print "Serving request for: ", username
 		dbResult = db.notification.find({"username": username}, {"time": 1, "display": 1, "source": 1, "_id": 0, "dateOfIngest": 1}).sort([("time", DESCENDING)])
 		
 		entity = [entry for entry in dbResult]
 		if not entity:
 	        	abort(404, 'User not found %s' % username)
 		out = json.dumps({"results": entity}, sort_keys=True, indent=4, separators=(',', ': '))
+		
 		print out
 	    	return out
 	except ValueError:
