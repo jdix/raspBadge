@@ -18,7 +18,7 @@ Provides data in the following format:
 {
   "results": [{
       "dateOfIngest": "2014-11-07 21:59:02",
-      "display": "A thing - 14:30 until 15:30",
+      "display": "Chat about stuff. Location: Room 123 - 14:30 until 15:30",
       "source": "googlecalendar",
       "time": {
         "start": "2014-11-01 14:30:00", 
