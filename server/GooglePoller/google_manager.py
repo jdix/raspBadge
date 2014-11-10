@@ -6,7 +6,7 @@ from google_poller import GooglePoller
  
 poller = GooglePoller()
 
-fileStream = open("googleusers", 'rt')
+fileStream = open("googleusers.csv", 'rt')
 try:
     reader = csv.reader(fileStream)
     for row in reader:
