@@ -9,6 +9,7 @@ To install mongo see:
 
 http://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian/
 
+'mongod' needs to be running before starting the './run.sh' script.
 
 Notifications Server
 Restful service which serves up the contents of the Notifications MongoDB database for the given user.
