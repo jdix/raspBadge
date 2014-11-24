@@ -12,7 +12,7 @@ from itertools import islice
 
 class NotificationsClient:
 
-	url="http://localhost:8080/notifications/"
+	url="http://ec2-54-173-81-247.compute-1.amazonaws.com:8080/notifications/"
 
 	def getForSIDD(self, sidd):
 		output = urllib2.urlopen(self.url  + sidd).read()

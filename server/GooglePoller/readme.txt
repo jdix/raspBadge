@@ -17,4 +17,6 @@ The calendar is at: https://www.google.com/calendar/embed?src=bHZuYTVidTJybGZicG
 although it looks like only i can edit it.
 
 If you want to add another user + calendar, add your fake sidd + url to ./googleusers.csv
+http://fullcalendar.io/docs/google_calendar/
+
 

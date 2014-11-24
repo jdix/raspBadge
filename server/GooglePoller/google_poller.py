@@ -17,26 +17,25 @@ class GooglePoller:
 	def poll(self, url, username):
 		try:
 			calendarJson=json.loads(urllib2.urlopen(url).read())
-			events=calendarJson['feed']['entry']
+			events=calendarJson['items']
 			self.database.deleteOldForUser(username, source)
 
 			for event in events:
-				title=event['title']['$t']
+				title=event['summary'] + "."
 				loc=""
 				time_display=""
 				start_time=""
 				end_time=""
-				for where in event['gd$where']:
-					location=where['valueString']
-					if (location != ""):
-						 loc = " Location: " + location
-				for when in event['gd$when']:
-					start=when['startTime']
-					end=when['endTime']
+				
+				location=event['location']
+				if (location != ""):
+					loc = " Location: " + location + "."
+				start=event['start']['dateTime']
+				end=event['end']['dateTime']
 
-					start_time = self.convertGoogleTime(start)
-					end_time = self.convertGoogleTime(end)
-					time_display = self.datesToDisplay(start, end)
+				start_time = self.convertGoogleTime(start)
+				end_time = self.convertGoogleTime(end)
+				time_display = self.datesToDisplay(start, end)
 
 				display = title + loc + time_display
 		
@@ -48,7 +47,7 @@ class GooglePoller:
 	def datesToDisplay(self, start, end):
 		start_display = self.convertToTimeOfDay(start) 
 		end_display = self.convertToTimeOfDay(end)
-		return " - " + start_display + " until " + end_display
+		return " " + start_display + " ~ " + end_display
 
 	def convertGoogleTime(self, time):
 		return self.formatDate("%Y-%m-%d %H:%M:%S",time)

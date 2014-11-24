@@ -1,5 +1,7 @@
 Some stuff for the Demo to explain our lack of NFC
 
+EInk displays:
+http://www.jeremyblum.com/2014/01/06/epaper-weather-station/
 
 NFC Research paper
 http://www.alansonsample.com/publications/docs/2013%20-%20UbiComp%20-%20Wirelessly%20Powered%20Bistable%20Display%20Tags.pdf
