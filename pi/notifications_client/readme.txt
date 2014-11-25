@@ -1,6 +1,8 @@
 This is the client library for running against the notifications restful service running on the EC2 box.l
 
 Install with:
+sudo apt-get install python-pip
+sudo pip install python-dev
 sudo pip install python-dateutil
 
 include into your app with:
