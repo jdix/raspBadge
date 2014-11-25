@@ -1,7 +1,9 @@
 This is the client library for running against the notifications restful service running on the EC2 box.l
 
-include into your app with:
+Install with:
+sudo pip install python-dateutil
 
+include into your app with:
 from '../notifications_client/notifications_client' import NotificationsClient
 NotificationsClient().getForSIDD("scmallo").getMostRelevent(5)
 
