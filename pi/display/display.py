@@ -2,4 +2,11 @@
 
 class EInkDisplay:
 	def drawJSON(self, json):
-		print "If i worked, i would display: ", json
+		for notifications in json['notifications']:
+			title = notifications['title']
+			start = notifications['start']
+			end = notifications['end']
+			location = notifications['location']
+			
+			print title, location, start, end
+		

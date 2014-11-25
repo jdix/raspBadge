@@ -12,7 +12,7 @@ def get_document(username):
 	try:
 
 		print "Serving request for: ", username
-		dbResult = db.notification.find({"username": username}, {"time": 1, "display": 1, "_id": 0,}).sort([("time.start", 1), ("time.end", 1)])
+		dbResult = db.notification.find({"username": username}, {"time": 1, "title": 1, "location": 1, "_id": 0,}).sort([("time.start", 1), ("time.end", 1)])
 		
 		entity = [entry for entry in dbResult]
 		if not entity:

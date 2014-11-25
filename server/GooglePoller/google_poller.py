@@ -21,25 +21,21 @@ class GooglePoller:
 			self.database.deleteOldForUser(username, source)
 
 			for event in events:
-				title=event['summary'] + "."
+				title=event['summary']
 				loc=""
-				time_display=""
 				start_time=""
 				end_time=""
 				
 				location=event['location']
 				if (location != ""):
-					loc = " Location: " + location + "."
+					loc = location
 				start=event['start']['dateTime']
 				end=event['end']['dateTime']
 
 				start_time = self.convertGoogleTime(start)
 				end_time = self.convertGoogleTime(end)
-				time_display = self.datesToDisplay(start, end)
 
-				display = title + loc + time_display
-		
-				self.database.insertEvent(username, source, start_time, end_time, display)
+				self.database.insertEvent(username, source, title, start_time, end_time, loc)
 		
 		except ValueError:
 			print("Error occurred while polling user")

@@ -12,7 +12,7 @@ from itertools import islice
 
 class NotificationsClient:
 
-	url="http://ec2-54-173-81-247.compute-1.amazonaws.com:8080/notifications/"
+	url="http://localhost:8080/notifications/"
 
 	def getForSIDD(self, sidd):
 		output = urllib2.urlopen(self.url  + sidd).read()
@@ -20,41 +20,40 @@ class NotificationsClient:
 
 		return Notifications(notificationsForUser)		
 	
+class Event:	
+	def __init__(self, title, location, start, end):
+		self.title = title
+		self.location = location
+		self.start = start
+		self.end = end
+	def toJSON(self):
+		return { "title": title, "location": location, "start": self.format(start), "end": self.format(end) }
+
+        def formatDate(self, f, time):
+                return dateutil.parser.parse("%H:%M").strftime(f)
+
+
+
 class Notifications:
 	def __init__(self, json):
 		events=json['results']
 		self.todayEvents = []		
-		self.tomorrowEvents = []
-		self.yesterdayEvents = []
-		count = 0
 		for event in events:
-			eventDisplay = event['display']
+			title = event['title']
+			location = event['location']
 			start = self.parseDay(event['time']['start'])
 			end = self.parseDay(event['time']['end'])
 			
 			today = self.formatDay(datetime.today())
-			tomorrow = self.formatDay(datetime.today() + timedelta(days=1))
-			yesterday = self.formatDay(datetime.today() + timedelta(days=-1))
 			if (start.date() == today.date()):
-				self.todayEvents.append(eventDisplay)
+				self.todayEvents.append(Event(title, location, start, end).toJSON())
 			
-			if (start.date() == tomorrow.date()):
-				self.tomorrowEvents.append(eventDisplay)
-			if (start.date() == yesterday.date()):
-				self.yesterdayEvents.append(eventDisplay)
-
 	def getMostRelevent(self, num):
-		retVal = self.create("Today", self.todayEvents[:num])
-
-		todayCount = len(retVal[0]["notifications"])
-		if todayCount < num:
-			retVal = retVal + self.create("Tomorrow", self.tomorrowEvents[:num - todayCount])
-		if len(retVal) == 0:
-			retVal = self.create("Yesterday", self.yesterdayEvents[:num])
-		return retVal
+		return self.create("Today", self.todayEvents[:num])
 
 	def create(self, day, n):
 		 return [ { "day": day, "notifications": n } ]
+
 	def parseDay(self, dateString):
 		return self.formatDay(dateutil.parser.parse(dateString))
 		

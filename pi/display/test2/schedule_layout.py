@@ -7,67 +7,67 @@ from EPD import EPD
 
 
 __author__ = 'james'
+class EInkImage:
+	img = Image.new('L', (176, 264))
+	d = ImageDraw.Draw(img)
+	d.rectangle(xy=(0, 0, 176, 264), fill=(255))
+	d.rectangle(xy=(0, 0, 176, 17), fill=(200))
 
-img = Image.new('L', (176, 264))
-d = ImageDraw.Draw(img)
-d.rectangle(xy=(0, 0, 176, 264), fill=(255))
-d.rectangle(xy=(0, 0, 176, 17), fill=(200))
+	font08 = ImageFont.load("helvO08.pil")
+	fontB08 = ImageFont.load("helvB08.pil")
+	font10 = ImageFont.load("timR10.pil")
 
-font08 = ImageFont.load("helvO08.pil")
-fontB08 = ImageFont.load("helvB08.pil")
-font10 = ImageFont.load("timR10.pil")
+	scheduleCount = 0
 
+	def header(self, bookedDesk=''):
+		self.d.text((5, 3), datetime.date.today().strftime('%d-%b-%Y'), fill=(0), font=self.font08)
+		if bookedDesk != '':
+			self.d.text((125, 3), bookedDesk, fill=(0), font=self.font08)
 
-def header(bookedDesk=''):
-    d.text((5, 3), datetime.date.today().strftime('%d-%b-%Y'), fill=(0), font=font08)
-    if bookedDesk != '':
-        d.text((125, 3), bookedDesk, fill=(0), font=font08)
-
-    d.rectangle((0, 18, 176, 22), fill=(0))
-
-
-def scheduled_item(placement, text='', start='0', stop='0', location='', important=0):
-    """
-    :param placement: int
-    :param text: string
-    :param start: string
-    :param stop:  string
-    :param location: string
-    :param important: int
-    """
-    offset = 20 + (placement * 40)
-
-    if important == 1:
-        d.rectangle((0, offset + 2, 176, offset + 40), fill=(210))
-    else:
-        d.rectangle((0, offset + 2, 176, offset + 40), fill=(235))
-
-    if start != '0' and stop != '0':
-        d.text((105, offset + 3), start + " - " + stop, font=font08)
-    elif start != '0':
-        d.text((145, offset + 3), start, font=font08)
-
-    d.text((5, offset + 3), text, fill=0, font=font10)
-    d.line((0, offset + 41, 176, offset + 41), fill=(100))
+		self.d.rectangle((0, 18, 176, 22), fill=(0))
 
 
-header('B4J.F45.2')
-scheduled_item(0, 'Sit in Meeting', start='12:00', stop='13:00', important=1)
-scheduled_item(1, 'Get Coffee', start='13:30')
-scheduled_item(2, 'Call Wife', important=1)
-scheduled_item(3, 'Brainstorm RaspBadge')
-scheduled_item(4)
-scheduled_item(5)
+	def scheduled_item(self, placement, text='', start='0', stop='0', location='', important=0):
+		"""
+		:param placement: int
+		:param text: string
+		:param start: string
+		:param stop:  string
+		:param location: string
+		:param important: int
+		"""
+		offset = 20 + (placement * 40)
 
-# import cStringIO
-# s = cStringIO.OutputType.StringIO()
-fin = img.rotate(90)
+		if important == 1:
+			self.d.rectangle((0, offset + 2, 176, offset + 40), fill=(210))
+		else:
+			self.d.rectangle((0, offset + 2, 176, offset + 40), fill=(235))
 
-epd = EPD()
-epd.clear()
-epd.display(fin)
-epd.update()
+		if start != '0' and stop != '0':
+			self.d.text((105, offset + 3), start + " - " + stop, font=self.font08)
+		elif start != '0':
+			self.d.text((145, offset + 3), start, font=self.font08)
 
-# fin.save("halibut.png", 'png')
+		self.d.text((5, offset + 3), text, fill=0, font=self.font10)
+		self.d.line((0, offset + 41, 176, offset + 41), fill=(100))
 
-# in_memory_file = s.getvalue()
+	def addHeader(self, title):
+		self.header('B4J.F45.2')		
+
+	def addItem(self, title, start='0', end='0', location='', important=0):
+		self.scheduled_item(placement=self.scheduleCount, text=title, start=start, stop=end, location=location, important=important)
+		self.scheduleCount = self.scheduleCount + 1
+	
+	def render(self):
+		# import cStringIO
+		# s = cStringIO.OutputType.StringIO()
+		fin = self.img.rotate(90)
+
+		epd = EPD()
+		epd.clear()
+		epd.display(fin)
+		epd.update()
+
+		# fin.save("halibut.png", 'png')
+
+		# in_memory_file = s.getvalue()
