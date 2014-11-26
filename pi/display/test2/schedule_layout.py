@@ -8,16 +8,19 @@ from EPD import EPD
 
 __author__ = 'james'
 class EInkImage:
+
 	img = Image.new('L', (176, 264))
 	d = ImageDraw.Draw(img)
 	d.rectangle(xy=(0, 0, 176, 264), fill=(255))
 	d.rectangle(xy=(0, 0, 176, 17), fill=(200))
 
-	font08 = ImageFont.load("helvO08.pil")
-	fontB08 = ImageFont.load("helvB08.pil")
-	font10 = ImageFont.load("timR10.pil")
-
 	scheduleCount = 0
+
+	def __init__(self, resourcesDir):
+		self.font08 = ImageFont.load(resourcesDir + "/helvO08.pil")
+		self.fontB08 = ImageFont.load(resourcesDir + "/helvB08.pil")
+		self.font10 = ImageFont.load(resourcesDir + "/timR10.pil")
+
 
 	def header(self, bookedDesk=''):
 		self.d.text((5, 3), datetime.date.today().strftime('%d-%b-%Y'), fill=(0), font=self.font08)
@@ -52,9 +55,9 @@ class EInkImage:
 		self.d.line((0, offset + 41, 176, offset + 41), fill=(100))
 
 	def addHeader(self, title):
-		self.header('B4J.F45.2')		
+		self.header(title)		
 
-	def addItem(self, title, start='0', end='0', location='', important=0):
+	def addItem(self, title, location='', start='0', end='0', important=0):
 		self.scheduled_item(placement=self.scheduleCount, text=title, start=start, stop=end, location=location, important=important)
 		self.scheduleCount = self.scheduleCount + 1
 	

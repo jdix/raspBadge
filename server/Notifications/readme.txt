@@ -4,7 +4,7 @@ install pip with: sudo apt-get install pip
 
 then
 sudo pip install pymongo
-
+sudo pip install bottle
 To install mongo see: 
 
 http://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian/

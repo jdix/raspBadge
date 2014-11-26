@@ -1,8 +1,13 @@
 #!/bin/python
 
+
+import sys
+
+sys.path.append("test2")
+
 from schedule_layout import EInkImage
 
-image = EInkImage()
+image = EInkImage("./test2")
 
 image.addHeader("blah blah")
 image.addItem("1 happened", "3pm", "4pm", "BSF")

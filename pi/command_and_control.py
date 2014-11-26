@@ -2,6 +2,7 @@
 
 
 import sys
+
 sys.path.append('notifications_client')
 sys.path.append('rfid')
 sys.path.append('ldap_client')

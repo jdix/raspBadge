@@ -12,12 +12,12 @@ from itertools import islice
 
 class NotificationsClient:
 
-	url="http://localhost:8080/notifications/"
+	url="http://raspberrypi:8080/notifications/"
 
 	def getForSIDD(self, sidd):
 		output = urllib2.urlopen(self.url  + sidd).read()
 		notificationsForUser = json.loads(output)
-
+		
 		return Notifications(notificationsForUser)		
 	
 class Event:	
@@ -27,10 +27,10 @@ class Event:
 		self.start = start
 		self.end = end
 	def toJSON(self):
-		return { "title": title, "location": location, "start": self.format(start), "end": self.format(end) }
+		return { "title": self.title, "location": self.location, "start": self.format(self.start), "end": self.format(self.end) }
 
-        def formatDate(self, f, time):
-                return dateutil.parser.parse("%H:%M").strftime(f)
+        def format(self, time):
+                return dateutil.parser.parse(time).strftime('%H:%M')
 
 
 
@@ -41,18 +41,18 @@ class Notifications:
 		for event in events:
 			title = event['title']
 			location = event['location']
-			start = self.parseDay(event['time']['start'])
-			end = self.parseDay(event['time']['end'])
+			start= event['time']['start']
+			end = event['time']['end']
 			
 			today = self.formatDay(datetime.today())
-			if (start.date() == today.date()):
+			if (self.parseDay(start).date() == today.date()):
 				self.todayEvents.append(Event(title, location, start, end).toJSON())
 			
 	def getMostRelevent(self, num):
-		return self.create("Today", self.todayEvents[:num])
+		return self.create(self.todayEvents[:num])
 
-	def create(self, day, n):
-		 return [ { "day": day, "notifications": n } ]
+	def create(self, n):
+		 return {"notifications": n } 
 
 	def parseDay(self, dateString):
 		return self.formatDay(dateutil.parser.parse(dateString))
