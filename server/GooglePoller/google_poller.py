@@ -26,7 +26,7 @@ class GooglePoller:
 				start_time=""
 				end_time=""
 				
-				location=event['location']
+				location=event.get('location', '')
 				if (location != ""):
 					loc = location
 				start=event['start']['dateTime']
