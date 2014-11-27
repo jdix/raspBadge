@@ -15,31 +15,36 @@ from ldap_client import LDAPClient
 from sound import Sound
 from display import EInkDisplay
 
+
 class CommandAndControl:
-	notificationsServer = NotificationsClient()
-	rfidReader = RFID()
-	ldapServer = LDAPClient()
-	sounder = Sound()
-	display = EInkDisplay()
+    def __init__(self):
+        pass
 
-	def next(self):
-		print "Waiting for next swipe.."
-		
-		swipedRFID = self.rfidReader.waitForNext()
-		print "Swiped RFID: ",  swipedRFID
+    notificationsServer = NotificationsClient()
+    rfid_reader = RFID()
+    ldapServer = LDAPClient()
+    sounder = Sound()
+    display = EInkDisplay()
 
-		sidd = self.ldapServer.resolveRFID(swipedRFID)
+    def next(self):
+        print "Waiting for next swipe.."
 
-		print "Resolved to SIDD: " + sidd
+        swiped_rfid = self.rfid_reader.wait_for_next()
+        print "Swiped RFID: ", swiped_rfid
 
-		if sidd != "unknown":
-			notifications = self.notificationsServer.getForSIDD(sidd).getMostRelevent(5)
-			self.display.drawJSON(notifications)
-			self.sounder.playSound()
-		else:
-			print "Error - unknown User"
-			self.sounder.playError()
+        sidd = self.ldapServer.resolveRFID(swiped_rfid)
+
+        print "Resolved to SIDD: " + sidd
+
+        if sidd != "unknown":
+            notifications = self.notificationsServer.getForSIDD(sidd).getMostRelevent(5)
+            self.display.draw_json(notifications)
+            self.sounder.playSound()
+        else:
+            print "Error - unknown User"
+            self.sounder.playError()
+
 
 cac = CommandAndControl()
-while(True):
-	cac.next()	
+while True:
+    cac.next()
