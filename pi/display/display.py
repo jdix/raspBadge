@@ -1,10 +1,6 @@
 #!/bin/python
 
-import sys
-
-sys.path.append("display/test2")
-
-from schedule_layout import EInkImage
+from libs.ScheduleLayout import EInkImage
 
 
 class EInkDisplay:
