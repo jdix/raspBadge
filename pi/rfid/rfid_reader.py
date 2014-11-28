@@ -27,15 +27,15 @@ class RFID:
   	if not rfid.readMifare():
     		print("This is not a mifare card")
   	else:
-    	# What type of Mifare card is it? (there are different types)
-    	print("Card type:" + rfid.getTypeName())
+	    	# What type of Mifare card is it? (there are different types)
+    		print("Card type:" + rfid.getTypeName())
 
     	# look up the unique ID to see if we recognise the user
     	uid = rfid.getUniqueId()
 
   	# wait for the card to be removed
-  	print("Waiting for card to be removed...")
-  	rfid.waitNoTag()
-  	print("Card removed")
+  	#print("Waiting for card to be removed...")
+  	#rfid.waitNoTag()
+  	#print("Card removed")
 
 	return uid
