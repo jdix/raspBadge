@@ -11,7 +11,7 @@ class EInkDisplay:
         """
         :param json: string
         """
-        image = EInkImage("display/test2")
+        image = EInkImage("display/fonts")
 
         image.add_header("Bobbles")
         print json
