@@ -20,5 +20,5 @@ class EInkDisplay:
             start = notifications['start']
             end = notifications['end']
             location = notifications['location']
-            image.add_item(title, location, start, end)
+            image.add_item(title=title, location=location, start=start, end=end)
         image.render()
