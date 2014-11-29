@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python command_and_control.py
+sudo python command_and_control.py

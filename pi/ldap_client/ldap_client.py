@@ -8,6 +8,8 @@ class LDAPClient:
 			return "jdixon"
 		elif rfid == "BBIDSDFS":
 			return "spitch"
+		elif rfid == "12345":
+			return "smallo"
 		else:
 			return "unknown"
 

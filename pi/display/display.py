@@ -13,7 +13,7 @@ class EInkDisplay:
         """
         image = EInkImage("display/fonts")
 
-        image.add_header("Bobbles")
+        image.add_header("Desk: B3-345")
         print json
         for notifications in json['notifications']:
             title = notifications['title']
