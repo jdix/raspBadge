@@ -51,14 +51,14 @@ class CommandAndControl:
            # self.sounder.playSound()
 	    sound_file2 = "/home/pi/raspBadge/pi/sound/match5.wav"
 	    sound2 = pygame.mixer.Sound(sound_file2)
-            thread.sound2.play(loops = 2)
+            sound2.play(loops = 2)
 
         else:
             print "Error - unknown User"
             #self.sounder.playError()
 	    sound_file3 = "/home/pi/raspBadge/pi/sound/badswap.wav"
-	    sound2 = pygame.mixer.Sound(sound_file3)
-            sound2.play(loops = 3)
+	    sound3 = pygame.mixer.Sound(sound_file3)
+            sound3.play(loops = 3)
 
 
 cac = CommandAndControl()
