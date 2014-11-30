@@ -30,13 +30,8 @@ class CommandAndControl:
         print "Waiting for next swipe.."
 
         swiped_rfid = self.rfid_reader.wait_for_next()
-	try:
-		sound_file = "/home/pi/raspBadge/pi/sound/beep1.ogg"
-                pygame.mixer.init(44100, -16, 1, 1024)
-		sound = pygame.mixer.Sound(sound_file)
-                sound.play(loops = 1)
-        except pygame.error, message:
-                print "Cannot load sound: ", message, sound_file
+	self.sounder.playRFID()
+
 	print "Swiped RFID: ", swiped_rfid
 
 	time.sleep(2)
@@ -48,18 +43,10 @@ class CommandAndControl:
         if sidd != "unknown":
             notifications = self.notificationsServer.getForSIDD(sidd).getMostRelevent(5)
             self.display.draw_json(notifications)
-           # self.sounder.playSound()
-	    sound_file2 = "/home/pi/raspBadge/pi/sound/match5.wav"
-	    sound2 = pygame.mixer.Sound(sound_file2)
-            sound2.play(loops = 2)
-
+	    self.sounder.playSuccess()
         else:
             print "Error - unknown User"
-            #self.sounder.playError()
-	    sound_file3 = "/home/pi/raspBadge/pi/sound/badswap.wav"
-	    sound3 = pygame.mixer.Sound(sound_file3)
-            sound3.play(loops = 3)
-
+            self.sounder.playError()
 
 cac = CommandAndControl()
 while True:
