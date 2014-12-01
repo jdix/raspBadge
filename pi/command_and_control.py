@@ -47,6 +47,7 @@ class CommandAndControl:
         else:
             print "Error - unknown User"
             self.sounder.playError()
+	time.sleep(5)
 
 cac = CommandAndControl()
 while True:

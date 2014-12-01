@@ -8,14 +8,14 @@ from EPD import EPD
 
 
 class EInkImage:
-    img = Image.new('L', (176, 264))
-    d = ImageDraw.Draw(img)
-    d.rectangle(xy=(0, 0, 176, 264), fill=255)
-    d.rectangle(xy=(0, 0, 176, 17), fill=200)
-
-    scheduleCount = 0
 
     def __init__(self, resources_dir):
+	self.img = Image.new('L', (176, 264))
+    	self.d = ImageDraw.Draw(self.img)
+    	self.d.rectangle(xy=(0, 0, 176, 264), fill=255)
+    	self.d.rectangle(xy=(0, 0, 176, 17), fill=200)
+	self.scheduleCount = 0
+
         self.font08 = ImageFont.load(resources_dir + "/helvO08.pil")
         self.fontB08 = ImageFont.load(resources_dir + "/helvB08.pil")
         self.font10 = ImageFont.load(resources_dir + "/timR10.pil")

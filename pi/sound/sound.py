@@ -8,10 +8,11 @@ class Sound:
 	def playError(self):
 		self.play("badswap.wav")
 	def playSuccess(self):
-		self.play("match5.wav")
-
+		#self.play("match5.wav")
+		self.play("magic-wand-1.wav")
 	def play (self, filename):
 		sound_file = "/home/pi/raspBadge/pi/sound/" + filename
 		pygame.mixer.init(44100, -16, 1, 1024)
 		sound = pygame.mixer.Sound(sound_file)
-		sound.play(loops = 1)
+		sound.set_volume(1.0)
+		sound.play(loops = 0)
